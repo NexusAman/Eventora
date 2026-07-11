@@ -12,7 +12,9 @@ const app = express();
 
 const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")
-  .map((origin) => origin.trim())
+  // Browser Origin headers never include a trailing slash, so normalize
+  // configured URLs such as https://app.example.com/ before comparing.
+  .map((origin) => origin.trim().replace(/\/+$/, ""))
   .filter(Boolean);
 
 app.use(
