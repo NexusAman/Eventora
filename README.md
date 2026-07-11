@@ -147,11 +147,29 @@ To create an administrator, update the relevant user's `role` to `admin` in Mong
 | `server` | `npm run dev` | Start API server with Nodemon |
 | `server` | `npm start` | Start API server with Node.js |
 
+## Deployment
+
+Deploy the frontend to **Vercel**, the API to **Render**, and use **MongoDB Atlas** for the database.
+
+1. Push this repository to GitHub. Do not commit `.env` files.
+2. In MongoDB Atlas, create a deployment and database user. Copy the application connection string and allow network access from your deployed API. Add the connection string to Render as `MONGO_URI`.
+3. In Render, create a **Web Service** from this repository with:
+   - **Root Directory:** `server`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+   - **Health Check Path:** `/api/health`
+   - **Environment Variables:** `MONGO_URI`, `JWT_SECRET`, `EMAIL_USER`, and `EMAIL_PASS`
+4. Deploy the Render service and copy its HTTPS URL, for example `https://eventora-api.onrender.com`.
+5. In Vercel, import the same repository and set **Root Directory** to `client`. Add `VITE_API_URL` with the value `https://eventora-api.onrender.com/api`, then deploy.
+6. Copy the Vercel production URL and set Render's `CLIENT_URL` to that URL (for example `https://eventora.vercel.app`). Redeploy the Render service.
+
+For a local production-style configuration, copy `client/.env.example` and `server/.env.example` to `.env` files in their respective folders, then fill in the values.
+
 ## Notes
 
 - OTP records automatically expire after five minutes.
 - Booking confirmation and payment status are handled by an administrator; no third-party payment gateway is integrated yet.
-- The frontend API base URL is currently configured as `http://localhost:5000/api` in `client/src/utils/axios.js`. Update it before deploying the client and server separately.
+- The frontend API base URL comes from `VITE_API_URL` and falls back to `http://localhost:5000/api` for local development.
 
 ## License
 
