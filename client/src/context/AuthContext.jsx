@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       return data;
     } catch (error) {
       console.error("OTP verification failed:", error);
+      throw error.response?.data || error;
     }
   };
 
