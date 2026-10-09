@@ -86,6 +86,7 @@ export const loginUser = async (req, res) => {
       await sendOtpEmail(email, otpCode, "account_verification");
 
       return res.status(403).json({
+        needsVerification: true,
         message: "Account not verified. OTP sent to email.",
       });
     }
