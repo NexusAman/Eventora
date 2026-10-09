@@ -1,4 +1,4 @@
-# Eventora
+# Eventora - Event Booking Platform
 
 **Eventora** is a full-stack event discovery and booking platform. It gives attendees a simple way to discover events, reserve a seat through email OTP verification, and manage their bookings—while providing administrators with a central workspace to create events and review booking requests.
 
